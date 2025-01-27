@@ -4,8 +4,9 @@ ARG BASE_IMAGE_TAG=latest
 
 FROM ${BASE_IMAGE_NAME}:${BASE_IMAGE_TAG} AS base
 
-# Work directory currently inside container - change later
-WORKDIR /workspace
+# Work directory 
+USER ${NB_USER}
+WORKDIR /home/${NB_USER}
 
 # Update pip if necessary
 RUN pip install --no-cache-dir --upgrade pip
