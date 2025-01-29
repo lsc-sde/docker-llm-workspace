@@ -1,6 +1,6 @@
 # Use jupyter pytorch notebook with cuda as base image for llm with gpu acceleration
 ARG BASE_IMAGE_NAME=quay.io/jupyter/pytorch-notebook
-ARG BASE_IMAGE_TAG=cuda12-python-3.11.8
+ARG BASE_IMAGE_TAG=cuda12-python-3.12.8
 
 FROM ${BASE_IMAGE_NAME}:${BASE_IMAGE_TAG} AS base
 
