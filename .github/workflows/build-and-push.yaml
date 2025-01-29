@@ -12,4 +12,5 @@ jobs:
     with:
       imageName: llm-workspace
       directory: docker/llm-workspace
+      platforms: '[ "amd64" ]'
     secrets: inherit
