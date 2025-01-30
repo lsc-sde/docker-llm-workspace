@@ -14,18 +14,19 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN curl -fsSL https://ollama.com/install.sh | sh && \
     ollama --version
 
+# Copy environment.yaml and 
+COPY environment.yaml environment.yaml
+RUN mamba env update --name base --file environment.yaml && \
+    rm environment.yaml && \
+    mamba clean --all -f -y && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
+
 # Change to env variable user
 USER ${NB_USER}
 
 # Set work directory 
 WORKDIR /home/${NB_USER}
-
-# Update pip and install dependencies/python libraries
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir \
-    llama-index \
-    ollama \
-    duckdb
 
 # Expose default jupyter port
 EXPOSE 8888
