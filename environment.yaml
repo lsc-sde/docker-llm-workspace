@@ -7,6 +7,9 @@ dependencies:
   - pip
   - jupyterlab
   - pip: 
+      #IDE  
+    - jupyter-server-proxy 
+    - jupyter-vscode-proxy
     - ollama
     - llama-index
     - duckdb

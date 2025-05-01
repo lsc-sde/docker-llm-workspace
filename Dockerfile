@@ -14,6 +14,14 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN curl -fsSL https://ollama.com/install.sh | sh && \
     ollama --version
 
+# Install Code Server
+ARG CODE_VERSION=4.99.3
+RUN curl -fsSL https://github.com/coder/code-server/releases/download/v${CODE_VERSION}/code-server_${CODE_VERSION}_amd64.deb -o code-server.deb && \
+    apt-get update && \
+    apt-get install -y ./code-server.deb && \
+    rm code-server.deb && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
 # Copy environment.yaml and 
 COPY environment.yaml environment.yaml
 RUN mamba env update --name base --file environment.yaml && \
@@ -30,3 +38,5 @@ WORKDIR /home/${NB_USER}
 
 # Expose default jupyter port
 EXPOSE 8888
+# Expose default Code Server port
+EXPOSE 8080
