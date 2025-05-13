@@ -22,6 +22,11 @@ RUN curl -fsSL https://github.com/coder/code-server/releases/download/v${CODE_VE
     rm code-server.deb && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
+# VS Code Extensions
+RUN code-server --install-extension ms-python.python && \
+    code-server --install-extension ms-toolsai.jupyter && \
+    code-server --install-extension ms-azuretools.vscode-docker
+
 # Copy environment.yaml and 
 COPY environment.yaml environment.yaml
 RUN mamba env update --name base --file environment.yaml && \
