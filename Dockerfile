@@ -33,7 +33,6 @@ COPY environment.yaml environment.yaml
 # Ensure Git is installed within container
 RUN apt-get update && apt-get install -y \
     git \
-    curl \
  && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install dependencies
