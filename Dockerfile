@@ -31,8 +31,10 @@ RUN code-server --install-extension ms-python.python && \
 COPY environment.yaml environment.yaml
 
 # Ensure Git is installed within container
-RUN apt-get update && apt-get install -y git && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+ && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install dependencies
 RUN mamba env update --name base --file environment.yaml && \
