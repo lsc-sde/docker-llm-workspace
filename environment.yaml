@@ -3,11 +3,14 @@ channels:
   - conda-forge
   - defaults
 dependencies:   #via conda
-  # Analytics Workspace Core
+  # Analytics Workspace
   - python=3.12
   - pip
   - jupyterlab
   
+  # Core dependencies 
+  - pydantic>=2.3.0           # Data validation
+
   # Database drivers and tools
   - sqlalchemy>=2.0.20        # SQL toolkit and ORM
   - ibis-framework>=10.5.0    # Database abstraction layer
@@ -17,6 +20,7 @@ dependencies:   #via conda
   # Environment and configuration
   - python-dotenv>=1.0.0      # Environment variable management
   - pyyaml>=6.0.2             # YAML configuration support
+  - pydantic-settings>=2.9.1  # Settings management with Pydantic
   
   # Logging and monitoring 
   - loguru>=0.7.0             # Better logging
