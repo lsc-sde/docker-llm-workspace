@@ -27,8 +27,14 @@ RUN code-server --install-extension ms-python.python && \
     code-server --install-extension ms-toolsai.jupyter && \
     code-server --install-extension ms-azuretools.vscode-docker
 
-# Copy environment.yaml and 
+# Copy environment.yaml
 COPY environment.yaml environment.yaml
+
+# Ensure Git is installed within container
+RUN apt-get update && apt-get install -y git && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install dependencies
 RUN mamba env update --name base --file environment.yaml && \
     rm environment.yaml && \
     mamba clean --all -f -y && \
