@@ -67,6 +67,6 @@ dependencies:   #via conda
     - llama-index
     - openai>=1.0.0            # OpenAI API
     
-    - git+https://github.com/astral-sh/uv
+    #- git+https://github.com/astral-sh/uv
     
 
