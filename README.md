@@ -21,7 +21,7 @@ docker build -t llm-workspace .
 
 ### 3. Run The Container With GPU Support
 ``` 
-docker run --gpus all -it -p 8888:8888 llm-workspace
+docker run --gpus all -it -p 8888:8888 -p 8080:8080 -p 5432:5432 --user root llm-workspace
 ``` 
 
 ### 4. Access Jupyter Notebook

@@ -27,15 +27,6 @@ RUN code-server --install-extension ms-python.python && \
     code-server --install-extension ms-toolsai.jupyter && \
     code-server --install-extension ms-azuretools.vscode-docker
 
-# Install PostgreSQL Server
-RUN apt-get update && apt-get install -y postgresql && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Create a default PostgreSQL user and database
-RUN service postgresql start && \
-    su - postgres -c "psql -c \"CREATE USER jovyan WITH PASSWORD 'password';\"" && \
-    su - postgres -c "createdb jovyan -O jovyan"
-
 # Copy environment.yaml
 COPY environment.yaml environment.yaml
 
@@ -51,13 +42,30 @@ RUN mamba env update --name base --file environment.yaml && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
+# Install PostgreSQL Server
+RUN apt-get update && apt-get install -y postgresql && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Create a default PostgreSQL user and database
+RUN service postgresql start && \
+    su - postgres -c "psql -c \"CREATE USER jovyan WITH PASSWORD 'password';\"" && \
+    su - postgres -c "createdb jovyan -O jovyan"
+
+# Copy and enable the PostgreSQL startup script
+COPY start_postgres.sh /usr/local/bin/start-notebook.d/start_postgres.sh
+RUN chmod +x /usr/local/bin/start-notebook.d/start_postgres.sh
+
 # Change to env variable user
 USER ${NB_USER}
 
 # Set work directory 
 WORKDIR /home/${NB_USER}
 
-# Expose default jupyter port
+# Expose jupyter port
 EXPOSE 8888
-# Expose default Code Server port
+# Expose Code Server port
 EXPOSE 8080
+#Expose PostgreSQL Port
+EXPOSE 5432
+#Expose Adminer Port
+EXPOSE 8081
