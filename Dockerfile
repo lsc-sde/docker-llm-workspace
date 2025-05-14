@@ -67,5 +67,3 @@ EXPOSE 8888
 EXPOSE 8080
 #Expose PostgreSQL Port
 EXPOSE 5432
-#Expose Adminer Port
-EXPOSE 8081
