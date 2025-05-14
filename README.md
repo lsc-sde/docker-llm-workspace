@@ -35,3 +35,9 @@ Inside Jupyter Notebook, run:
 ``` 
 !nvidia-smi
 ``` 
+
+### 6. VS Code 
+Select the Python intepreter below:
+``` 
+Python 3.12.8 ('base') /opt/conda/bin/python
+``` 
