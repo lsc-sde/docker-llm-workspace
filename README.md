@@ -1,6 +1,12 @@
 # LLM Analytics Workspace
 A GPU accelerated workspace designed for Large Language Model (LLM) research.
 
+## Using VS Code 
+Select the Python intepreter below:
+``` 
+Python 3.12.8 ('base') /opt/conda/bin/python
+``` 
+
 ## Running Locally
 ### Prerequisites 
 Ensure the following are installed before running the workspace locally:
@@ -34,10 +40,4 @@ http://127.0.0.1:8888/lab?token=[TOKEN]
 Inside Jupyter Notebook, run:
 ``` 
 !nvidia-smi
-``` 
-
-### 6. VS Code 
-Select the Python intepreter below:
-``` 
-Python 3.12.8 ('base') /opt/conda/bin/python
 ``` 
