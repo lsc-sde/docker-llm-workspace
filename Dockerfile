@@ -4,7 +4,7 @@ ARG BASE_IMAGE_TAG=cuda12-python-3.12.8
 
 FROM ${BASE_IMAGE_NAME}:${BASE_IMAGE_TAG} AS base
 
-# Root user for installing ollama cli
+# Root user for installations
 USER root
 
 # Shell
@@ -22,18 +22,22 @@ RUN curl -fsSL https://github.com/coder/code-server/releases/download/v${CODE_VE
     rm code-server.deb && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# VS Code Extensions
+# Install VS Code Extensions
 RUN code-server --install-extension ms-python.python && \
     code-server --install-extension ms-toolsai.jupyter && \
     code-server --install-extension ms-azuretools.vscode-docker
 
-# Copy environment.yaml
-COPY environment.yaml environment.yaml
-
-# Ensure Git is installed within container
+# Install Git
 RUN apt-get update && apt-get install -y \
     git \
  && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install PostgreSQL 
+RUN apt-get update && apt-get install -y postgresql && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Copy environment.yaml
+COPY environment.yaml environment.yaml
 
 # Install dependencies
 RUN mamba env update --name base --file environment.yaml && \
@@ -42,18 +46,16 @@ RUN mamba env update --name base --file environment.yaml && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
-# Install PostgreSQL Server
-RUN apt-get update && apt-get install -y postgresql && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+    
 
-# Create a default PostgreSQL user and database
-RUN service postgresql start && \
-    su - postgres -c "psql -c \"CREATE USER jovyan WITH PASSWORD 'password';\"" && \
-    su - postgres -c "createdb jovyan -O jovyan"
+#
+#TEMP COMMENT FOR COMPOSE TESTING
+#
+# Add PostgreSQL startup script     
+#COPY start_postgres.sh /usr/local/bin/start-notebook.d/start_postgres.sh
+#RUN chmod +x /usr/local/bin/start-notebook.d/start_postgres.sh
 
-# Copy and enable the PostgreSQL startup script
-COPY start_postgres.sh /usr/local/bin/start-notebook.d/start_postgres.sh
-RUN chmod +x /usr/local/bin/start-notebook.d/start_postgres.sh
+
 
 # Change to env variable user
 USER ${NB_USER}
