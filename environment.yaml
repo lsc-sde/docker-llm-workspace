@@ -68,5 +68,8 @@ dependencies:   #via conda
     - openai>=1.0.0            # OpenAI API
     
     #- git+https://github.com/astral-sh/uv
+
+    # MCP Work
+    - fastmcp
     
 
