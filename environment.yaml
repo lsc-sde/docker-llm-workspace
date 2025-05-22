@@ -65,6 +65,8 @@ dependencies:   #via conda
     # LLM Integration 
     - ollama
     - llama-index
+    - llama-index-llms-ollama
+    - llama-index-tools-mcp
     - openai>=1.0.0            # OpenAI API
     
     #- git+https://github.com/astral-sh/uv
